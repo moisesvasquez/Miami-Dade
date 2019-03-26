@@ -8,3 +8,16 @@
 setwd("~/Documents/R/Miami-Dade")
 Use <- read.csv("Certificates_of_Use_Issued_by_MiamiDade_County__Jan_2003_to_present.csv")
 Occupancy <- read.csv("Certificate_of_Occupancy.csv")
+Use$Value <- 1
+Occupancy$Value <- 1
+Use$YEAR <- substr(Use$CertOccIssueDate, start = 1, stop = 4)
+Occupancy$YEAR <- substr(Occupancy$ISSUE_DATE, start = 1, stop = 4)
+AggUse <- data.frame(aggregate(list(Count = Use$Value), 
+                               by=list(Year = Use$YEAR),
+                               FUN = sum))
+AggOccupancy <- data.frame(aggregate(list(Count = Occupancy$Value), 
+                               by=list(Year = Occupancy$YEAR),
+                               FUN = sum))
+
+write.csv(AggOccupancy, "OccupancyByYear.csv", row.names = FALSE)
+write.csv(AggUse, "UseYear.csv", row.names = FALSE)
