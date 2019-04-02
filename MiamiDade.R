@@ -5,6 +5,8 @@
 #}
 #resp <- api("/repos/hadley/httr")
 #resp
+#How can we equally proportion residential and commercial use of Miami-Dade?
+#Which areas of Miami-Dade should have a more porportionate distribution of residential and commercial use?
 setwd("~/Documents/R/Miami-Dade")
 Use <- read.csv("Certificates_of_Use_Issued_by_MiamiDade_County__Jan_2003_to_present.csv")
 Occupancy <- read.csv("Certificate_of_Occupancy.csv")
@@ -18,6 +20,4 @@ AggUse <- data.frame(aggregate(list(Count = Use$Value),
 AggOccupancy <- data.frame(aggregate(list(Count = Occupancy$Value), 
                                by=list(Year = Occupancy$YEAR),
                                FUN = sum))
-
-write.csv(AggOccupancy, "OccupancyByYear.csv", row.names = FALSE)
-write.csv(AggUse, "UseYear.csv", row.names = FALSE)
+plot(AggOccupancy)
