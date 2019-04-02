@@ -20,4 +20,16 @@ AggUse <- data.frame(aggregate(list(Count = Use$Value),
 AggOccupancy <- data.frame(aggregate(list(Count = Occupancy$Value), 
                                by=list(Year = Occupancy$YEAR),
                                FUN = sum))
-plot(AggOccupancy)
+summary(Use)
+UseCert <- subset(Use, YEAR == "2018" | YEAR == "2003" | YEAR == "2004"| YEAR == "2005"| YEAR == "2006"| YEAR == "2007"| YEAR == "2008"| YEAR == "2009"| YEAR == "2010"| YEAR == "2011"| YEAR == "2012"| YEAR == "2013"| YEAR == "2014"| YEAR == "2015"| YEAR == "2016"| YEAR == "2017")
+OccCert <- subset(Occupancy, YEAR == "2018" | YEAR == "2003" | YEAR == "2004"| YEAR == "2005"| YEAR == "2006"| YEAR == "2007"| YEAR == "2008"| YEAR == "2009"| YEAR == "2010"| YEAR == "2011"| YEAR == "2012"| YEAR == "2013"| YEAR == "2014"| YEAR == "2015"| YEAR == "2016"| YEAR == "2017")
+qplot(YEAR, data = UseCert, 
+      fill = I("red"), 
+      main = "Certificates of Use Issued in Miami-Dade", 
+      xlab = "Years", 
+      ylab = "Number of Certificates Issued")
+qplot(YEAR, data = OccCert, 
+      fill = I("blue"), 
+      main = "Certificates of Occupancy Issued in Miami-Dade", 
+      xlab = "Years", 
+      ylab = "Number of Certificates Issued")
