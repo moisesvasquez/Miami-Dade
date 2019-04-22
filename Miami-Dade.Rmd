@@ -1,0 +1,46 @@
+---
+title: "Miami Dade"
+output: html_notebook
+---
+
+```{r}
+setwd("~/Documents/R/Miami-Dade")
+library(tidyverse)
+Use <- read_csv("Certificates_of_Use_Issued_by_MiamiDade_County__Jan_2003_to_present.csv")
+Occupancy <- read_csv("Certificate_of_Occupancy.csv")
+```
+```{r}
+Use$Value <- 1
+Occupancy$Value <- 1
+Use$YEAR <- substr(Use$CertOccIssueDate, start = 1, stop = 4)
+Occupancy$YEAR <- substr(Occupancy$ISSUE_DATE, start = 1, stop = 4)
+head(Use)
+```
+
+```{r}
+#YEARS <- c(2008:2019)
+UseSub <- Use %>% select(YEAR)
+UseSub <- subset(UseSub, YEAR %in% YEARS)
+summary(UseSub)
+```
+```{r}
+UseYearGroup <- UseSub %>% group_by(YEAR) %>% summarize(N = n())
+head(Use)
+```
+
+
+```{r}
+UseDate <- Use %>% select(CertOccIssueDate, YEAR) %>% group_by(CertOccIssueDate) %>% summarise(N = n())
+head(UseDate)
+```
+
+```{r}
+#UseDate <- UseDate[-c(1), ]
+#UseDate$YEAR <- substr(UseDate$CertOccIssueDate, start = 1, stop = 4)
+#UseDate$MonthDay <- substr(UseDate$CertOccIssueDate, start = 5, stop = 8)
+p <- ggplot(data = UseDate, mapping = aes(x = MonthDay, y = N)) + geom_col(mapping = aes(color=as.factor(YEAR), alpha=.04)) + geom_smooth()
+p
+#ggsave(file = "Years.png", plot = p, width = 50, height = 10, limitsize = FALSE)
+```
+
+
